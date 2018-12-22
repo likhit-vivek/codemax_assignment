@@ -1,6 +1,6 @@
 <?php 
 
-require 'database.php';
+require_once 'database.php';
 
 /*** 
 The code from line 10 to line 16 is used to call appropriate function as required.

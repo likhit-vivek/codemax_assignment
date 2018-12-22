@@ -1,6 +1,6 @@
 <?php
 
-require 'database.php';
+require_once 'database.php';
 
 /*** 
 The code from line 10 to line 16 is used to call appropriate function as required.
@@ -44,6 +44,13 @@ class Model
 		} else {
 			return json_encode(['success'=> false, 'msg'=> 'Unable to add model. Try again.']);
 		}
+	}
+	
+	public function getModelsByGroup()
+	{
+		$query = "SELECT name, manufacturer, COUNT(name) as count FROM models WHERE sold=0 GROUP BY manufacturer, name";
+		$result = $this->db->executeQuery($query);
+		return $result;
 	}
 }
 

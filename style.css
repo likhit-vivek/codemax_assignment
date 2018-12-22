@@ -7,6 +7,11 @@
 	color: white !important;
 }
 
+#main-head {
+	border-top: 0;
+	border-bottom: 0;
+}
+
 .create-button {
 	margin: 20px 0;
 }

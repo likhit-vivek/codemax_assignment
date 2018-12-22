@@ -1,45 +1,50 @@
 <?php 
-include('header.php'); 
 require 'manufacturer.php';
+require 'model.php';
+include('header.php'); 
 
 $manufacturerObj 	= new Manufacturer();
-$manufacturers 		= $manufacturerObj->getManufacturers();
+$result 			= $manufacturerObj->getManufacturers();
+$manufacturers 		= [];
 
+while($row = $result->fetch_array(MYSQLI_ASSOC)) 
+{
+	$manufacturers[$row['id']] = $row['name'];
+}
+
+$modelObj 			= new Model();
+$models				= $modelObj->getModelsByGroup();
+
+if($models->num_rows > 0) {
+	$counter = 0;
 ?>
-
-<div class="text-center row align-items-center vertical-align-container">
-	<div class="col"></div>
-	<div class="col-lg-6 col-xl-5">
-		<h3 class="text-center form-heading">Add a new model</h3>
-		<div class="alert alert-success d-none row">Model added successfully!</div>
-		<div class="alert alert-danger d-none row"></div>
-		<form id="add-form" method="POST" action="model.php">
-			<input type="hidden" class="form-control" name="functionName" value="addModel">
-			<div class="form-group row">
-				<input type="text" class="form-control col mr-sm-2" id="name" placeholder="Enter model name" name="name">
-				<select class="form-control col" id="manufacturer" name="manufacturer">
-					<option value="" selected disabled hidden>Choose a manufacturer</option>
-					<?php while($row = $manufacturers->fetch_array(MYSQLI_ASSOC)) { ?>
-						<option value="<?php echo $row['id']; ?>"><?php echo $row['name']; ?></option>
-					<?php } ?>
-				</select>
-			</div>
-			<div class="form-group row">
-				<input type="text" class="form-control col mr-sm-2" id="color" placeholder="Enter color" name="color">
-				<input type="text" class="form-control col" id="year" placeholder="Enter year of manufacture" name="year">
-			</div>
-			<div class="form-group row">
-				<input type="text" class="form-control" id="regNum" placeholder="Enter registration number" name="regNum">
-			</div>
-			<div class="form-group row">
-				<textarea class="form-control" rows="5" id="note" name="note" maxlength="250" placeholder="Enter a note (Max 250 characters)"></textarea>
-			</div>
-			<div class="row">
-				<button type="submit" class="btn btn-primary col-12">Submit</button>
-			</div>
-		</form>
-	</div>
-	<div class="col"></div>
+<div class="row align-items-center vertical-align-container text-center">
+	<table class="table table-responsive-md table-hover">
+		<thead>
+			<tr class="d-flex">
+				<th id="main-head" class="col-lg-12"><h2>Inventory</h2></th>
+			</tr>
+			<tr class="d-flex">
+				<th class="col-lg-2">Serial No</th>
+				<th class="col-lg-3">Manufacturer</th>
+				<th class="col-lg-3">Model</th>
+				<th class="col-lg-2">Count</th>
+				<th class="col-lg-2">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php while($row = $models->fetch_array(MYSQLI_ASSOC)) { $counter++;?>
+			<tr class="d-flex">
+				<td class="col-lg-2"><?php echo $counter; ?></td>
+				<td class="col-lg-3"><?php echo $manufacturers[$row['manufacturer']]; ?></td>
+				<td class="col-lg-3"><?php echo $row['name']; ?></td>
+				<td class="col-lg-2"><?php echo $row['count']; ?></td>
+				<td class="col-lg-2">
+					<a type="button" class="btn btn-success btn-action" href="viewProduct.php?id=<?php echo $row['id']; ?>"><i class="fas fa-eye fa-fw"></i></a>
+				</td>
+			</tr>
+			<?php } ?>
+		</tbody>
+	</table>
 </div>
-
-<?php include('footer.php'); ?>
+<?php } include('footer.php'); ?>
