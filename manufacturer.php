@@ -30,7 +30,7 @@ class Manufacturer
 			return json_encode(['success'=> false, 'msg'=> 'Please enter a name!']);
 		}
 		
-		$query = "SELECT * FROM manufacturers WHERE name='$name'";
+		$query 	= "SELECT * FROM manufacturers WHERE name='$name'";
 		$result = $this->db->executeQuery($query);
 		
 		if($result->num_rows > 0) {
@@ -45,6 +45,13 @@ class Manufacturer
 		} else {
 			return json_encode(['success'=> false, 'msg'=> 'Unable to add manufacturer. Try again.']);
 		}
+	}
+	
+	public function getManufacturers()
+	{
+		$query 	= "SELECT * FROM manufacturers";
+		$result = $this->db->executeQuery($query);
+		return $result;
 	}
 }
 

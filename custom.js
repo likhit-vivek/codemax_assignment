@@ -31,7 +31,7 @@ $(document).ready(function() {
 					setTimeout(function() { $('.alert-danger').addClass('d-none'); }, 3000)
 				}
 			}).fail(function() {
-				$('.alert-danger').html('Unable to add manufacturer. Try again.');
+				$('.alert-danger').html('Unable to add manufacturer/model. Try again.');
 				$('.alert-danger').removeClass('d-none');
 				setTimeout(function() { $('.alert-danger').addClass('d-none'); }, 3000)
 			});
