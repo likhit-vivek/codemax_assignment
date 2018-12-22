@@ -2,21 +2,49 @@
 
 require 'database.php';
 
+/*** 
+The code from line 10 to line 16 is used to call appropriate function as required.
+Alternative solution: 
+Use an intermediate php file which can act as a channel between the AJAX call and the class function below.
+***/
+$selfObject = new Manufacturer();
+
+if($_SERVER['REQUEST_METHOD'] == 'POST') 
+{
+	$name = $_POST['name'];
+	if($_POST['functionName'] == 'addManufacturer') echo $selfObject->addManufacturer($name);
+}
+
 class Manufacturer
 {
-	private $name;
 	private $db;
 	
-	public function __construct($name)
+	public function __construct() 
 	{
-		$this->name = $name;
-		$this->db 	= new Database();
+		$this->db = new Database();
 	}
 	
-	public function addManufacturer() 
+	public function addManufacturer($name) 
 	{
-		$query 	= "INSERT INTO manufacturers (name) VALUES ($this->name)";
-		$result = $db->executeQuery($query);
+		if($name == "") {
+			return json_encode(['success'=> false, 'msg'=> 'Please enter a name!']);
+		}
+		
+		$query = "SELECT * FROM manufacturers WHERE name='$name'";
+		$result = $this->db->executeQuery($query);
+		
+		if($result->num_rows > 0) {
+			return json_encode(['success'=> false, 'msg'=> 'Manufacturer already exists!']);
+		}
+		
+		$query 	= "INSERT INTO manufacturers (name) VALUES ('$name')";
+		$result = $this->db->executeQuery($query);
+		
+		if($result) {
+			return json_encode(['success'=> true, 'msg'=> 'success']);
+		} else {
+			return json_encode(['success'=> false, 'msg'=> 'Unable to add manufacturer. Try again.']);
+		}
 	}
 }
 

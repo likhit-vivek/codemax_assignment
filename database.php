@@ -10,11 +10,13 @@ class Database
 	
 	public function __construct()
 	{
-		$this->conn = new mysqli($host, $user, $pwd, $db_name);
+		if(!isset($this->conn)) {
+			$this->conn = new mysqli($this->host, $this->user, $this->pwd, $this->db_name);
+		}
 	}
 	
 	public function executeQuery($query) {
-		return $mysqli->query($query);
+		return $this->conn->query($query);
 	}
 }
 
