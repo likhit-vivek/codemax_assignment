@@ -38,3 +38,9 @@ $(document).ready(function() {
 		}
 	});
 });
+
+var showModal = function(manufacturer, model) {
+	$('.modal-body').load('content.php?manf='+manufacturer+'&model='+model, function() {
+		$('#myModal').modal({show: true});
+	});
+}

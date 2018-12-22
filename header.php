@@ -23,25 +23,21 @@ session_start();
 <body>
 	<div class="header">
 		<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
-			<a class="navbar-brand" href="home.php">
+			<a class="navbar-brand" href="<?php echo $rootPath."/index.php"; ?>">
 				CodeMax
 			</a>
 			
-			<?php if(isset($_SESSION['user_id'])) { ?>
 			<ul class="navbar-nav">
 				<li class="nav-item">
-					<a class="nav-link" href="<?php echo $rootPath."/products/home.php"; ?>">Products</a>
+					<a class="nav-link" href="<?php echo $rootPath."/index.php"; ?>">Inventory</a>
 				</li>
-				<?php if($_SESSION['user_role'] == 1) { ?>
 				<li class="nav-item">
-					<a class="nav-link" href="<?php echo $rootPath."/users/users.php"; ?>">Users</a>
+					<a class="nav-link" href="<?php echo $rootPath."/addModel.php"; ?>">Add Model</a>
 				</li>
-				<?php } ?>
 				<li class="nav-item">
-					<a class="nav-link" href="<?php echo $rootPath."/logout.php"; ?>">Sign out</a>
+					<a class="nav-link" href="<?php echo $rootPath."/addManufacturer.php"; ?>">Add Manufacturer</a>
 				</li>
 			</ul>
-			<?php } ?>
 		</nav>
 	</div>
 	<div class="container main">

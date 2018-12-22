@@ -40,11 +40,31 @@ if($models->num_rows > 0) {
 				<td class="col-lg-3"><?php echo $row['name']; ?></td>
 				<td class="col-lg-2"><?php echo $row['count']; ?></td>
 				<td class="col-lg-2">
-					<a type="button" class="btn btn-success btn-action" href="viewProduct.php?id=<?php echo $row['id']; ?>"><i class="fas fa-eye fa-fw"></i></a>
+					<a type="button" class="btn btn-success btn-action" onclick="showModal('<?php echo $row['manufacturer']; ?>', '<?php echo $row['name']; ?>')"><i class="fas fa-eye fa-fw"></i></a>
 				</td>
 			</tr>
 			<?php } ?>
 		</tbody>
 	</table>
 </div>
-<?php } include('footer.php'); ?>
+<?php } ?>
+
+<div class="modal fade" id="myModal">
+	<div class="modal-dialog modal-dialog-centered modal-lg">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+			<div class="modal-body">
+			</div>
+			
+			<div class="modal-footer">
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<?php include('footer.php'); ?>

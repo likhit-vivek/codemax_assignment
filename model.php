@@ -48,7 +48,14 @@ class Model
 	
 	public function getModelsByGroup()
 	{
-		$query = "SELECT name, manufacturer, COUNT(name) as count FROM models WHERE sold=0 GROUP BY manufacturer, name";
+		$query = "SELECT name, manufacturer, COUNT(name) as count FROM models GROUP BY manufacturer, name";
+		$result = $this->db->executeQuery($query);
+		return $result;
+	}
+	
+	public function getModelsByName($manufacturer, $model)
+	{
+		$query = "SELECT * FROM models WHERE manufacturer=$manufacturer AND name='$model'";
 		$result = $this->db->executeQuery($query);
 		return $result;
 	}
