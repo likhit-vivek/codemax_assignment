@@ -44,3 +44,24 @@ var showModal = function(manufacturer, model) {
 		$('#myModal').modal({show: true});
 	});
 }
+
+var sell = function(id) {
+	$.ajax({
+		url: "model.php",
+		type: "POST",
+		data: { 'id': id, 'flag': true },
+		dataType: 'json'
+	}).done(function(data) {
+		if(data.success) {
+			$('.alert-success').removeClass('d-none');
+			setTimeout(function() { $('.alert-success').addClass('d-none'); }, 3000);
+			$('#'+id).remove();
+		} else {
+			$('.alert-danger').removeClass('d-none');
+			setTimeout(function() { $('.alert-danger').addClass('d-none'); }, 3000);
+		}
+	}).fail(function() {
+		$('.alert-danger').removeClass('d-none');
+		setTimeout(function() { $('.alert-danger').addClass('d-none'); }, 3000);
+	});
+}

@@ -3,7 +3,7 @@
 require_once 'database.php';
 
 /*** 
-The code from line 10 to line 16 is used to call appropriate function as required.
+The code from line 10 to line 21 is used to call appropriate function as required.
 Alternative solution: 
 Use an intermediate php file which can act as a channel between the AJAX call and the class function below.
 ***/
@@ -11,13 +11,18 @@ $selfObject = new Model();
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') 
 {
-	$name 			= $_POST['name'];
-	$manufacturer 	= $_POST['manufacturer'];
-	$color 			= $_POST['color'];
-	$year 			= $_POST['year'];
-	$regNum 		= $_POST['regNum'];
-	$note 			= $_POST['note'];
-	if($_POST['functionName'] == 'addModel') echo $selfObject->addModel($name, $manufacturer, $color, $year, $regNum, $note);
+	if(isset($_POST['flag']) && $_POST['flag']) {
+		$id = $_POST['id'];
+		echo $selfObject->markAsSold($id);
+	} else {
+		$name 			= $_POST['name'];
+		$manufacturer 	= $_POST['manufacturer'];
+		$color 			= $_POST['color'];
+		$year 			= $_POST['year'];
+		$regNum 		= $_POST['regNum'];
+		$note 			= $_POST['note'];
+		if($_POST['functionName'] == 'addModel') echo $selfObject->addModel($name, $manufacturer, $color, $year, $regNum, $note);
+	}
 }
 
 class Model 
@@ -58,6 +63,17 @@ class Model
 		$query = "SELECT * FROM models WHERE manufacturer=$manufacturer AND name='$model'";
 		$result = $this->db->executeQuery($query);
 		return $result;
+	}
+	
+	public function markAsSold($id)
+	{
+		$query = "UPDATE models SET sold=true WHERE id=$id";
+		$result = $this->db->executeQuery($query);
+		if($result) {
+			return json_encode(['success'=> true]);
+		} else {
+			return json_encode(['success'=> false]);
+		}
 	}
 }
 

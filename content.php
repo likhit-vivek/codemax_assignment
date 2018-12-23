@@ -19,6 +19,8 @@ $result 		= $modelObj->getModelsByName($manufacturer, $model);
 
 if($result->num_rows > 0) {
 ?>
+<div class="alert alert-success d-none">Sold successfully!</div>
+<div class="alert alert-danger d-none">Unable to sell. Try again.</div>
 <table class="table table-responsive-md table-hover text-center">
 	<thead>
 		<tr>
@@ -42,7 +44,13 @@ if($result->num_rows > 0) {
 			<td><?php echo $row['mfdyear']; ?></td>
 			<td><?php echo $row['regnum']; ?></td>
 			<td><?php echo $row['note']; ?></td>
-			<td><?php echo $row['sold'] ? "Sold out" : "Sell"; ?></td>
+			<td>
+				<?php if($row['sold']) { ?>
+				<span>Sold out</span>
+				<?php } else { ?>
+				<button type='button' class='btn btn-primary' onclick="sell(<?php echo $row['id']; ?>)">Sell</button>
+				<?php } ?>
+			</td>
 		</tr>
 		<?php } ?>
 	</tbody>
