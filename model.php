@@ -47,7 +47,7 @@ class Model
 		if($result) {
 			return json_encode(['success'=> true, 'msg'=> 'success']);
 		} else {
-			return json_encode(['success'=> false, 'msg'=> 'Unable to add model. Try again.']);
+			return json_encode(['success'=> false, 'msg'=> 'Unable to add model. Try again.', 'error'=>$mysqli->error]);
 		}
 	}
 	
