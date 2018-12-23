@@ -1,11 +1,17 @@
 <?php
 
+$cleardb_url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+
 class Database 
 {	
-	private $host = "localhost";
+	private $host 		= $cleardb_url['host'];
+	private $user 		= $cleardb_url['user'];
+	private $pwd 		= $cleardb_url['pass'];
+	private $db_name 	= substr($cleardb_url['path'],1);
+	/*private $host = "localhost";
 	private $user = "root";
 	private $pwd = "";
-	private $db_name = "codemax_assignment";
+	private $db_name = "codemax_assignment";*/
 	public $conn;
 	
 	public function __construct()
