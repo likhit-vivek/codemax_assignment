@@ -16,10 +16,10 @@ class Database
 	public function __construct()
 	{
 		$this->cleardb_url 	= parse_url(getenv("CLEARDB_DATABASE_URL"));
-		$this->host 		= $cleardb_url['host'];
-		$this->user 		= $cleardb_url['user'];
-		$this->pwd 			= $cleardb_url['pass'];
-		$this->db_name 		= substr($cleardb_url['path'],1);
+		$this->host 		= $this->cleardb_url['host'];
+		$this->user 		= $this->cleardb_url['user'];
+		$this->pwd 			= $this->cleardb_url['pass'];
+		$this->db_name 		= substr($this->cleardb_url['path'],1);
 		if(!isset($this->conn)) {
 			$this->conn = new mysqli($this->host, $this->user, $this->pwd, $this->db_name);
 		}
