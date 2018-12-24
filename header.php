@@ -32,7 +32,7 @@ session_start();
 					<a class="nav-link" href="index.php">Inventory</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="addModel.php"">Add Model</a>
+					<a class="nav-link" href="addModel.php">Add Model</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="addManufacturer.php">Add Manufacturer</a>
